@@ -3,21 +3,6 @@ const startStopBtn = document.getElementById('start-stop-btn');
 const resetBtn = document.getElementById('reset-btn');
 const workTimeInput = document.getElementById('work-time');
 const breakTimeInput = document.getElementById('break-time');
-const buttonSound = document.getElementById('buttonSound');
-const timerEndSound = document.getElementById('timerEndSound');
-
-function playSound(sound) {
-  sound.play();
-}
-
-
-function tick() {
-  // ... other logic ...
-  if (currentTimer === 0) {
-    // ... other logic ...
-    playSound(timerEndSound);
-  }
-}
 
 let isRunning = false;
 let isWorkTime = true;
@@ -32,12 +17,8 @@ function updateTimerDisplay() {
   const formattedMinutes = minutes.toString().padStart(2, '0');
   const formattedSeconds = seconds.toString().padStart(2, '0');
 
-  timerDisplay.textContent = `${formattedMinutes}:${formattedSeconds}`;
-
-
-  console.log(`Minutes: ${minutes}, Seconds: ${seconds}`); // Log for debugging
+  timerDisplay.textContent = `${formattedMinutes}:${formattedSeconds}`; 1 
 }
-
 
 function startStopTimer() {
   if (isRunning) {
@@ -48,9 +29,11 @@ function startStopTimer() {
     isRunning = true;
     startStopBtn.textContent = "Stop";
 
+    // Validate input values (optional, adjust as needed)
+    // ...
+
     timerInterval = setInterval(tick, 1000);
   }
-  playSound(buttonSound);
 }
 
 function resetTimer() {
@@ -63,7 +46,6 @@ function resetTimer() {
     currentTimer = breakTimeInSeconds;
   }
   updateTimerDisplay();
-  playSound(buttonSound);
 }
 
 function tick() {
@@ -77,7 +59,6 @@ function tick() {
     isWorkTime = !isWorkTime;
     currentTimer = isWorkTime ? workTimeInSeconds : breakTimeInSeconds;
     updateTimerDisplay();
-    playSound(timerEndSound);
   }
 }
 
