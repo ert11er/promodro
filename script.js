@@ -10,6 +10,15 @@ let workTimeInSeconds = 25 * 60;
 let breakTimeInSeconds = 5 * 60;
 let currentTimer = workTimeInSeconds;
 
+// Sound effects
+const buttonClickSound = new Audio('button_click.mp3');
+const timerEndSound = new Audio('timer_end.mp3');
+
+function playSound(sound) {
+  sound.currentTime = 0; // Reset sound to the beginning
+  sound.play();
+}
+
 function updateTimerDisplay() {
   const minutes = Math.floor(currentTimer / 60);
   const seconds = currentTimer % 60;
@@ -17,10 +26,11 @@ function updateTimerDisplay() {
   const formattedMinutes = minutes.toString().padStart(2, '0');
   const formattedSeconds = seconds.toString().padStart(2, '0');
 
-  timerDisplay.textContent = `${formattedMinutes}:${formattedSeconds}`; 1 
+  timerDisplay.textContent = `${formattedMinutes}:${formattedSeconds}`;
 }
 
 function startStopTimer() {
+  playSound(buttonClickSound); // Play button click sound
   if (isRunning) {
     clearInterval(timerInterval);
     isRunning = false;
@@ -28,15 +38,12 @@ function startStopTimer() {
   } else {
     isRunning = true;
     startStopBtn.textContent = "Stop";
-
-    // Validate input values (optional, adjust as needed)
-    // ...
-
     timerInterval = setInterval(tick, 1000);
   }
 }
 
 function resetTimer() {
+  playSound(buttonClickSound); // Play button click sound
   clearInterval(timerInterval);
   isRunning = false;
   startStopBtn.textContent = "Start";
@@ -58,6 +65,7 @@ function tick() {
     startStopBtn.textContent = "Start";
     isWorkTime = !isWorkTime;
     currentTimer = isWorkTime ? workTimeInSeconds : breakTimeInSeconds;
+    playSound(timerEndSound); // Play timer end sound
     updateTimerDisplay();
   }
 }
