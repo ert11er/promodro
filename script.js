@@ -9,6 +9,7 @@ let isWorkTime = true;
 let workTimeInSeconds = 25 * 60;
 let breakTimeInSeconds = 5 * 60;
 let currentTimer = workTimeInSeconds;
+let timerInterval;
 
 // Sound effects
 const buttonClickSound = new Audio('button_click.mp3');
@@ -73,6 +74,12 @@ function tick() {
 workTimeInput.addEventListener('change', () => {
   const inputValue = workTimeInput.value.trim();
   const [minutes, seconds] = inputValue.split(',').map(Number);
+  
+  if (isNaN(minutes) || isNaN(seconds) || minutes < 0 || seconds < 0 || seconds >= 60) {
+    alert('Lütfen geçerli bir süre girin (dakika,saniye)');
+    workTimeInput.value = '25,00';
+    return;
+  }
 
   workTimeInSeconds = minutes * 60 + seconds;
 
@@ -85,6 +92,12 @@ workTimeInput.addEventListener('change', () => {
 breakTimeInput.addEventListener('change', () => {
   const inputValue = breakTimeInput.value.trim();
   const [minutes, seconds] = inputValue.split(',').map(Number);
+  
+  if (isNaN(minutes) || isNaN(seconds) || minutes < 0 || seconds < 0 || seconds >= 60) {
+    alert('Lütfen geçerli bir süre girin (dakika,saniye)');
+    breakTimeInput.value = '5,00';
+    return;
+  }
 
   breakTimeInSeconds = minutes * 60 + seconds;
 
